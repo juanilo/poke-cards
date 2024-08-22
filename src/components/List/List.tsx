@@ -1,5 +1,5 @@
 import { PokemonCard } from "@/types/types";
-import Card from "@/components/Card/Card";
+import { Card } from "@/components/index";
 import Link from "next/link";
 
 interface ListProps {
@@ -7,7 +7,7 @@ interface ListProps {
 }
 const List = ({ items }: ListProps) => {
   return (
-    <div className="container grid grid-cols-4 gap-4 py-9">
+    <div className="grid grid-cols-4 gap-4 py-9">
       {items &&
         items.map((item: PokemonCard) => (
           <div key={item.id}>

@@ -1,8 +1,8 @@
 const HOST = process.env.NEXT_PUBLIC_API_URL;
 const API = '/api/v1/cards';
 
-export const get = async (nameQuery :string, attackQuery: string, typeSelected: string) => {
-  const results = await fetch(`${HOST}${API}/?name=${nameQuery}&attacker=${attackQuery}&type=${typeSelected}`);
+export const get = async (limit: number, page: number, nameQuery :string, attackQuery: string, typeSelected: string) => {
+  const results = await fetch(`${HOST}${API}/?limit=${limit}&page=${page}&name=${nameQuery}&attacker=${attackQuery}&type=${typeSelected}`);
   return await results.json();
 }
 
