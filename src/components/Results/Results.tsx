@@ -3,9 +3,10 @@ import clsx from "clsx";
 
 interface ResultsProps {
   results: ResultType;
+  onApply: () => void;
 }
 
-const Results = ({ results }: ResultsProps) => {
+const Results = ({ results, onApply }: ResultsProps) => {
   return (
     <div className="flex flex-col items-center gap-4 mt-10 pt-14">
       <h2 className="text-4xl">Result of the battle:</h2>
@@ -31,13 +32,19 @@ const Results = ({ results }: ResultsProps) => {
             <span>{results.attackModified}</span>
           </p>
         </div>
-        <p className="text-center">
+        <p className="text-center my-5">
           {results.succeed ? (
             <strong className="text-green-600">SUCCEED!</strong>
           ) : (
             <strong className="text-red-600">FAILED</strong>
           )}
         </p>
+        <button
+          onClick={() => onApply()}
+          className="bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl mt-3"
+        >
+          Apply results to target Card
+        </button>
       </div>
     </div>
   );

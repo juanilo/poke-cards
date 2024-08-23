@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="flex flex-col items-center mx-auto max-w-[75%] ">
+    <main className="flex flex-col items-center mx-auto max-w-[75%] min-h-[100vh] ">
       <div className="flex flex-row items-center gap-4">
         <CardsIcon />
         <h1 className="text-6xl">Poke-Cards : Battle</h1>

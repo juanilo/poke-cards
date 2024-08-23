@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { get } from "@/services/cards";
+import { useGetCards } from "@/hooks/useCards";
 import {
   Header,
   List,
@@ -12,52 +12,20 @@ import {
 } from "@/components/index";
 
 const PokeCardsHomePage = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [cards, setCards] = useState([]);
-
   const [nameQuery, nameQuerySet] = useState("");
   const [abilitySelected, setAbility] = useState("");
   const [typeSelected, setTypeSelected] = useState("");
 
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
 
-  const fetchCards = async (
-    limit: number,
-    page: number,
-    nameQuery: string,
-    abilitySelected: string,
-    typeSelected: string
-  ) => {
-    try {
-      const { cards, totalCards } = await get(
-        limit,
-        page,
-        nameQuery,
-        abilitySelected,
-        typeSelected
-      );
-      setCards(cards);
-      setTotalPages(Math.ceil(parseInt(totalCards) / limit));
-    } catch (e) {
-      setError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const retry = () => {
-    setIsLoading(true);
-    setError(false);
-    fetchCards(limit, page, nameQuery, abilitySelected, typeSelected);
-  };
-
-  useEffect(() => {
-    fetchCards(limit, page, nameQuery, abilitySelected, typeSelected);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit, nameQuery, abilitySelected, typeSelected]);
+  const { data, error, isLoading } = useGetCards(
+    limit,
+    page,
+    nameQuery,
+    abilitySelected,
+    typeSelected
+  );
 
   return (
     <main className="flex flex-col items-center mx-auto max-w-[75%]">
@@ -75,19 +43,19 @@ const PokeCardsHomePage = () => {
       ) : (
         !error && (
           <div>
-            <List items={cards} />
+            <List items={data.cards} />
             <Paginator
               limit={limit}
               setLimit={setLimit}
-              total={totalPages}
+              total={Math.ceil(parseInt(data.totalCards) / limit)}
               current={page}
               onPageChange={(page) => setPage(page)}
             />
           </div>
         )
       )}
-      {error ? (
-        <ErrorMessage message="Error fetching cards." retry={retry} />
+      {!isLoading && error ? (
+        <ErrorMessage message="Error fetching cards." />
       ) : null}
     </main>
   );

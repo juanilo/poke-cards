@@ -1,57 +1,35 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { ResultType } from "@/types/types";
-import { attack } from "@/services/cards";
+import { useAttack, useGetCardById, updateCard } from "@/hooks/useCards";
 import { Results, ErrorMessage, Spinner } from "@/components/";
+import useToast from "@/hooks/useToast";
 
 const ResultsPage = ({ params }: { params: { slug: string[] } }) => {
+  const { successToast, errorToast } = useToast();
   const [id, attackId, targetId] = params.slug;
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [results, setResults] = useState<ResultType>({
-    card: "",
-    attackTo: "",
-    originalAttack: 0,
-    attackModified: 0,
-    succeed: false,
-  });
+  const { data: results, error, isLoading } = useAttack(id, attackId, targetId);
+  const { data: card } = useGetCardById(targetId);
 
-  const executeBattle = async (
-    id: string,
-    attackId: string,
-    targetId: string
-  ) => {
+  const useApplyResults = async () => {
     try {
-      setResults(await attack(id, attackId, targetId));
-    } catch (e) {
-      setError(true);
-    } finally {
-      setIsLoading(false);
+      const newHP = card.hp - results!.attackModified;
+      await updateCard(targetId, {
+        hp: newHP > 0 ? newHP : 0,
+      });
+      successToast("Card succefully updated!");
+    } catch {
+      errorToast("Error updating card!");
     }
   };
-
-  const retry = () => {
-    setIsLoading(true);
-    setError(false);
-    executeBattle(id, attackId, targetId);
-  };
-
-  useEffect(() => {
-    executeBattle(id, attackId, targetId);
-  }, [id, attackId, targetId]);
 
   return (
     <>
       {isLoading && !error ? (
         <Spinner />
       ) : (
-        results && <Results results={results} />
+        results && <Results results={results} onApply={useApplyResults} />
       )}
-      {error ? (
-        <ErrorMessage message="Error executing the battle." retry={retry} />
-      ) : null}
+      {error ? <ErrorMessage message="Error executing the battle." /> : null}
     </>
   );
 };
