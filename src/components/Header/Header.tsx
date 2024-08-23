@@ -1,14 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
 import Cards from "@/svgs/cards.svg";
 
-import { PokemonType } from "@/types/types";
+import { Select } from "@/components/index";
+import { AbilityType, PokemonType } from "@/types/types";
 
 interface HeaderProps {
   title: string;
   nameQuery: string;
   nameSet: Dispatch<SetStateAction<string>>;
-  attackQuery: string;
-  attackSet: Dispatch<SetStateAction<string>>;
+  abilitySelected: string;
+  setAbility: Dispatch<SetStateAction<string>>;
   typeSelected: string;
   typeSet: Dispatch<SetStateAction<string>>;
 }
@@ -17,8 +18,8 @@ const Header = ({
   title,
   nameQuery,
   nameSet,
-  attackQuery,
-  attackSet,
+  abilitySelected,
+  setAbility,
   typeSelected,
   typeSet,
 }: HeaderProps) => {
@@ -37,28 +38,25 @@ const Header = ({
           onChange={(e) => nameSet(e.target.value)}
           className="rounded-lg p-2"
         />
-        <input
-          type="text"
-          placeholder="Search by attack..."
-          value={attackQuery}
-          onChange={(e) => attackSet(e.target.value)}
-          className="rounded-lg p-2"
+        <Select
+          placeholder="Select ability..."
+          options={Object.values(AbilityType).map((x) => {
+            return {
+              label: x,
+              value: x,
+            };
+          })}
+          selected={abilitySelected}
+          setSelected={setAbility}
         />
-        <select
-          name="type"
-          value={typeSelected}
-          onChange={(e) => typeSet(e.target.value)}
-          className="cursor-pointer p-2 rounded-lg"
-        >
-          <option value="" key="select">
-            Select Type...
-          </option>
-          {types.map((type) => (
-            <option value={type} key={type}>
-              {type}
-            </option>
-          ))}
-        </select>
+        <Select
+          placeholder="Select type..."
+          options={types.map((x) => {
+            return { label: x, value: x };
+          })}
+          selected={typeSelected}
+          setSelected={typeSet}
+        />
       </div>
     </div>
   );

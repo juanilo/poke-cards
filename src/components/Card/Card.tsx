@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { Ability, PokemonCard, AttackType } from "@/types/types";
+import { Ability, PokemonCard, AttackType, PokemonType } from "@/types/types";
 import { RarityBadge, AbilityyBadge } from "@/components/index";
 import { useSetAttackState, useAttackState } from "@/context/attackContext";
 import SelectedIcon from "@/svgs/lefthand.svg";
@@ -22,24 +22,35 @@ const Card = ({ card, allowToSelectAttack }: CardProps) => {
           HP {card.hp}{" "}
         </div>
       </div>
-      <div className="p-3">
+      <div className="p-3 w-full h-60 m-2 mb-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={card.image_url}
           alt={card.name}
-          className="w-60 h-60 bg-white object-cover rounded-xl"
+          className="w-60 h-60 bg-white object-cover rounded-xl shadow-xl"
         />
       </div>
       <div className="flex flex-col justify-between p-3">
-        <div>Type : {card.type}</div>
+        <div className="items-center flex justify-center">
+          <strong
+            className={clsx(
+              card.type === PokemonType.Basic ? "text-green-600" : "",
+              card.type === PokemonType.Legendary ? "text-blue-600" : "",
+              card.type === PokemonType.StageI ? "text-violet-600" : "",
+              card.type === PokemonType.StageII ? "text-red-600" : ""
+            )}
+          >
+            {card.type}
+          </strong>
+        </div>
+        {allowToSelectAttack && attackId === "" && (
+          <div className="text-red-600 font-bold comic-baloon">
+            Please select an attack to proceed to the Battle!
+          </div>
+        )}
         <div className="pt-6">
-          <span>Attacks:</span>
-          {allowToSelectAttack && attackId === "" && (
-            <div className="text-red-600 font-bold comic-baloon">
-              Please select an attack to proceed to the Battle!
-            </div>
-          )}
-          <ul className="p-3 gap-4 bg-neutral-800 rounded-xl mt-1">
+          <span>Attacks</span>
+          <ul className="p-3 gap-4 bg-neutral-800 rounded-xl mt-1 shadow-2xl">
             {card.attacks &&
               card.attacks.map((attack: AttackType) => (
                 <li
@@ -59,7 +70,7 @@ const Card = ({ card, allowToSelectAttack }: CardProps) => {
                   </div>
                   <ul
                     className={clsx(
-                      "p-2 gap-1 bg-neutral-700 rounded-xl",
+                      "p-2 gap-1 bg-neutral-700 rounded-xl pt-3 pl-3",
                       attackId === attack.id ? "bg-red-700" : ""
                     )}
                   >

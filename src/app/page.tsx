@@ -14,10 +14,11 @@ import {
 const PokeCardsHomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [nameQuery, nameQuerySet] = useState("");
-  const [attackQuery, attackQuerySet] = useState("");
-  const [typeSelected, setTypeSelected] = useState("");
   const [cards, setCards] = useState([]);
+
+  const [nameQuery, nameQuerySet] = useState("");
+  const [abilitySelected, setAbility] = useState("");
+  const [typeSelected, setTypeSelected] = useState("");
 
   const [limit, setLimit] = useState(4);
   const [page, setPage] = useState(1);
@@ -27,20 +28,19 @@ const PokeCardsHomePage = () => {
     limit: number,
     page: number,
     nameQuery: string,
-    attackQuery: string,
+    abilitySelected: string,
     typeSelected: string
   ) => {
     try {
-      const result = await get(
+      const { cards, totalCards } = await get(
         limit,
         page,
         nameQuery,
-        attackQuery,
+        abilitySelected,
         typeSelected
       );
-      const { cards, count } = result;
       setCards(cards);
-      setTotalPages(Math.ceil(parseInt(count) / limit));
+      setTotalPages(Math.ceil(parseInt(totalCards) / limit));
     } catch (e) {
       setError(true);
     } finally {
@@ -51,38 +51,40 @@ const PokeCardsHomePage = () => {
   const retry = () => {
     setIsLoading(true);
     setError(false);
-    fetchCards(limit, page, nameQuery, attackQuery, typeSelected);
+    fetchCards(limit, page, nameQuery, abilitySelected, typeSelected);
   };
 
   useEffect(() => {
-    fetchCards(limit, page, nameQuery, attackQuery, typeSelected);
+    fetchCards(limit, page, nameQuery, abilitySelected, typeSelected);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit, nameQuery, attackQuery, typeSelected]);
+  }, [page, limit, nameQuery, abilitySelected, typeSelected]);
 
   return (
     <main className="flex flex-col items-center mx-auto max-w-[75%]">
       <Header
         title="Poke Cards"
         nameQuery={nameQuery}
-        attackQuery={attackQuery}
-        typeSelected={typeSelected}
-        attackSet={attackQuerySet}
         nameSet={nameQuerySet}
+        typeSelected={typeSelected}
         typeSet={setTypeSelected}
+        abilitySelected={abilitySelected}
+        setAbility={setAbility}
       />
       {isLoading ? (
         <Spinner />
       ) : (
-        <div>
-          <List items={cards} />
-          <Paginator
-            limit={limit}
-            setLimit={setLimit}
-            total={totalPages}
-            current={page}
-            onPageChange={(page) => setPage(page)}
-          />
-        </div>
+        !error && (
+          <div>
+            <List items={cards} />
+            <Paginator
+              limit={limit}
+              setLimit={setLimit}
+              total={totalPages}
+              current={page}
+              onPageChange={(page) => setPage(page)}
+            />
+          </div>
+        )
       )}
       {error ? (
         <ErrorMessage message="Error fetching cards." retry={retry} />

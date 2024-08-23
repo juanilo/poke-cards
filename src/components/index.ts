@@ -8,4 +8,5 @@ export { default as List } from '@/components/List/List';
 export { default as Paginator } from '@/components/Paginator/Paginator';
 export { default as RarityBadge } from '@/components/RarityBadge/RarityBadge';
 export { default as Results } from '@/components/Results/Results';
+export { default as Select } from '@/components/Select/Select';
 export { default as Spinner } from '@/components/Spinner/Spinner';

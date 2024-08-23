@@ -18,7 +18,7 @@ export default function RootLayout({
         <h1 className="text-6xl">Poke-Cards : Battle</h1>
       </div>
       {children}
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-10 mb-20">
         <Link href="/">
           <button className="w-full py-2 px-3 border rounded-2xl shadow text-black bg-green-700 h-16 text-2xl cursor-pointer font-bold">
             Back
