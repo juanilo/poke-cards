@@ -9,7 +9,6 @@ interface ResultsProps {
 const Results = ({ results, onApply }: ResultsProps) => {
   return (
     <div className="flex flex-col items-center gap-4 mt-10 pt-14">
-      <h2 className="text-4xl">Result of the battle:</h2>
       <div
         className={clsx(
           "text-4xl text-black rounded-2xl p-12 m-6",

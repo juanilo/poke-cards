@@ -13,7 +13,7 @@ const BattleButton = ({ id, targetId }: BattleButtonProps) => {
     <Link href={`/battle/result/${id}/${attackId}/${targetId}`}>
       <button
         disabled={targetId === "" || attackId === ""}
-        className="w-full py-2 px-3 border rounded-full shadow text-black bg-red-700 h-16 text-4xl cursor-pointer font-bold disabled:bg-gray-500 disabled:cursor-not-allowed"
+        className="w-full py-2 px-3 border rounded-full shadow text-black bg-red-700 hover:bg-red-300 h-16 text-4xl cursor-pointer font-bold disabled:bg-gray-500 disabled:cursor-not-allowed"
       >
         Battle!
       </button>

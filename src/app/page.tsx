@@ -1,62 +1,30 @@
 "use client";
-
-import { useState } from "react";
-
-import { useGetCards } from "@/hooks/useCards";
-import {
-  Header,
-  List,
-  Spinner,
-  ErrorMessage,
-  Paginator,
-} from "@/components/index";
+import { Game, TopBar } from "@/components/index";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
+import CardsIcon from "@/svgs/cards.svg";
 
 const PokeCardsHomePage = () => {
-  const [nameQuery, nameQuerySet] = useState("");
-  const [abilitySelected, setAbility] = useState("");
-  const [typeSelected, setTypeSelected] = useState("");
-
-  const [limit, setLimit] = useState(4);
-  const [page, setPage] = useState(1);
-
-  const { data, error, isLoading } = useGetCards(
-    limit,
-    page,
-    nameQuery,
-    abilitySelected,
-    typeSelected
-  );
-
+  const { user, error, isLoading: isLoadingUser } = useUser();
   return (
     <main className="flex flex-col items-center mx-auto max-w-[75%]">
-      <Header
-        title="Poke Cards"
-        nameQuery={nameQuery}
-        nameSet={nameQuerySet}
-        typeSelected={typeSelected}
-        typeSet={setTypeSelected}
-        abilitySelected={abilitySelected}
-        setAbility={setAbility}
-      />
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        !error && (
-          <div>
-            <List items={data.cards} />
-            <Paginator
-              limit={limit}
-              setLimit={setLimit}
-              total={Math.ceil(parseInt(data.totalCards) / limit)}
-              current={page}
-              onPageChange={(page) => setPage(page)}
-            />
-          </div>
-        )
+      <TopBar user={user} isLoading={isLoadingUser} />
+      {user && <Game />}
+      {!user && (
+        <div className="flex flex-col items-center justify-center w-[75%] h-[90vh]">
+          <h1 className="text-center text-3xl font-bold flex items-center justify-center">
+            Welcome to <CardsIcon />{" "}
+            <span className="text-4xl">Poke Cards</span>
+          </h1>
+          <p className="p-12 pb-5">Please Login to Play</p>
+          <Link href="/api/auth/login">
+            <button className="bg-blue-700 hover:bg-blue-300 rounded-lg text-white text-2xl font-bold px-4 py-2">
+              Login
+            </button>
+          </Link>
+        </div>
       )}
-      {!isLoading && error ? (
-        <ErrorMessage message="Error fetching cards." />
-      ) : null}
+      {error && <p>Error Login in... retry later. </p>}
     </main>
   );
 };
