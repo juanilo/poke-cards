@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import Guy from "@/svgs/guy.svg";
 
 interface TopProps {
   user?: UserProfile;
@@ -14,9 +13,17 @@ const Top = ({ user, isLoading }: TopProps) => {
         <div>Loading user info...</div>
       ) : (
         user && (
-          <div className="flex items-center justify-between w-full flex-row">
+          <div className="flex items-center justify-between w-full flex-row mt-6">
             <div className="font-bold flex items-center cursor-default">
-              <Guy /> {user.name}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                width="60px"
+                height="60px"
+                src={user.picture!}
+                alt={user.nickname!}
+                className="rounded-full border-4 border-red-900 mr-4"
+              />
+              {user.name}
             </div>
             <div>
               <Link href="/api/auth/logout">
