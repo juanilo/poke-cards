@@ -17,7 +17,7 @@ const Card = ({ card, allowToSelectAttack }: CardProps) => {
   return (
     <div className="max-w-96 m-2 p-6 bg-neutral-600 max-h-max rounded-xl min-h-[48rem]">
       <div className="flex flex-row justify-between items-center">
-        <div className="text-black text-3xl font-bold">{card.name}</div>
+        <div className="text-black text-2xl font-bold">{card.name}</div>
         <div className="bg-red-600 rounded-full p-2 border-white border-2 shadow-md cursor-default">
           HP {card.hp}{" "}
         </div>

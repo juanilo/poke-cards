@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Pokemon Cards :
 
-## Getting Started
+After clone the project, 
 
-First, run the development server:
+run : `npm install`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+to install all the dependencies.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+make sure to set .env.local with this environment variables : 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+NEXT_PUBLIC_API_URL= <API_URL>
+AUTH0_SECRET= <SECRET_KEY>
+AUTH0_BASE_URL= <BASE_URL>
+AUTH0_ISSUER_BASE_URL= <ISSUER_BASE_URL>
+AUTH0_CLIENT_ID= <CLIENT_ID>
+AUTH0_CLIENT_SECRET= <CLIENT_SECRET>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Now lets compile and run the app :
 
-## Learn More
+run `npm run build && npm run start`
 
-To learn more about Next.js, take a look at the following resources:
+## Dev 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To run and work in dev mode, use the command :
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`npm run dev`
