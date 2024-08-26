@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { NameType, PokemonCard } from "@/types/types";
+import { NameType, PokemonCard, Dictionary } from "@/types/types";
 import { BattleButton, Card, Select } from "@/components/index";
 import { AttackContext } from "@/context/attackContext";
 
@@ -12,6 +12,16 @@ interface BattleProps {
 
 const Battle = ({ id, card, names }: BattleProps) => {
   const [targetId, setTargetId] = useState<string>("");
+  const [oponentImg, setOponentImg] = useState<Dictionary>({});
+
+  useEffect(() => {
+    const op: Dictionary = {};
+    names.forEach((name: NameType) => {
+      op[name.id] = name.image_url;
+    });
+    setOponentImg(op);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [names]);
 
   return (
     <AttackContext>
@@ -22,6 +32,16 @@ const Battle = ({ id, card, names }: BattleProps) => {
         </div>
         {names && (
           <div className="flex flex-col gap-16">
+            {targetId && (
+              <div className="p-3 w-full h-60 m-2 mb-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={oponentImg[targetId]}
+                  className="w-60 h-60 bg-white object-cover rounded-xl shadow-xl border-8 border-red-700"
+                  alt="oponent"
+                />
+              </div>
+            )}
             <Select
               className="w-full py-2 px-3 border rounded shadow text-black h-16 text-2xl cursor-pointer font-semibold"
               placeholder="Select an oponent..."

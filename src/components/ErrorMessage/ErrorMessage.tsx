@@ -6,7 +6,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage = ({ message }: ErrorMessageProps) => {
   return (
-    <div className="h-full w-full flex justify-center items-center mt-[15%] flex-col pb-[25%]">
+    <div className="absolute inset-0 flex items-center justify-center text-white">
       <SkullIcon />
       <p className="text-4xl mb-5">{message}</p>
     </div>

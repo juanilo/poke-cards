@@ -55,6 +55,7 @@ export type PokemonCard = {
 
 export type NameType = {
   id: string;
+  image_url: string;
   name: string;
 }
 
@@ -64,4 +65,8 @@ export type ResultType = {
   originalAttack: number;
   attackModified: number;
   succeed: boolean;
+}
+
+export interface Dictionary {
+  [key: string]: string;
 }

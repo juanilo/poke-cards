@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: black;
+html,body {
+  background-color: #232323;
+  color: white;
 }
 
 ._toast-info_v91zz_1 {

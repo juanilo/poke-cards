@@ -40,7 +40,7 @@ const Results = ({ results, onApply }: ResultsProps) => {
         </p>
         <button
           onClick={() => onApply()}
-          className="bg-blue-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl mt-3"
+          className="bg-blue-800 hover:bg-blue-300 border-4 border-blue-300 text-white font-bold py-2 px-4 rounded-xl mt-3"
         >
           Apply results to target Card
         </button>
