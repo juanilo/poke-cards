@@ -32,7 +32,7 @@ const Paginator = ({
         <select
           value={limit}
           onChange={limitHandler}
-          className="rounded cursor-pointer"
+          className="rounded cursor-pointer text-black"
         >
           <option value="4">4</option>
           <option value="10">10</option>
@@ -51,8 +51,8 @@ const Paginator = ({
             key={"page" + num}
             onClick={() => onPageChange(num)}
             className={clsx(
-              "bg-white px-2 py-1 rounded-full w-12 text-center text-3xl cursor-pointer",
-              num === current ? "text-red-500" : ""
+              "bg-white border-4 px-2 py-1 rounded-full w-12 text-center text-3xl cursor-pointer",
+              num === current ? "text-red-500 border-red-500" : "border-black"
             )}
           >
             {num}
