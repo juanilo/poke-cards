@@ -3,13 +3,28 @@ import { Game, TopBar } from "@/components/index";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import CardsIcon from "@/svgs/cards.svg";
+import { authenticateUser } from "@/hooks/useCards";
+import { useEffect, useState } from "react";
+
+const checkWindow = () => (typeof window === "undefined" ? false : true);
 
 const PokeCardsHomePage = () => {
   const { user, error, isLoading: isLoadingUser } = useUser();
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (checkWindow()) {
+      setAuthorized(sessionStorage.getItem("token") ? true : false);
+    }
+    if (user?.name && !authorized) {
+      authenticateUser(user.name);
+    }
+  }, [user, authorized]);
+
   return (
     <main className="flex flex-col items-center mx-auto max-w-[75%]">
       <TopBar user={user} isLoading={isLoadingUser} />
-      {user && <Game />}
+      {user && authorized && <Game />}
       {!user && (
         <div className="flex flex-col items-center justify-center w-[75%] h-[90vh]">
           <h1 className="text-center text-3xl font-bold flex items-center justify-center">

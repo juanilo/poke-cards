@@ -1,12 +1,12 @@
 ## Pokemon Cards :
 
-After clone the project, 
+After clone the project,
 
 run : `npm install`
 
 to install all the dependencies.
 
-make sure to set .env.local with this environment variables : 
+make sure to set .env.local with this environment variables :
 
 NEXT_PUBLIC_API_URL= <API_URL>
 AUTH0_SECRET= <SECRET_KEY>
@@ -19,7 +19,7 @@ Now lets compile and run the app :
 
 run `npm run build && npm run start`
 
-## Dev 
+## Dev
 
 To run and work in dev mode, use the command :
 
