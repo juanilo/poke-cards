@@ -7,6 +7,9 @@ interface TopProps {
 }
 
 const Top = ({ user, isLoading }: TopProps) => {
+  const unauthorize = () => {
+    sessionStorage.removeItem("token");
+  };
   return (
     <div className="w-full h-11 flex items-center">
       {isLoading ? (
@@ -27,7 +30,10 @@ const Top = ({ user, isLoading }: TopProps) => {
             </div>
             <div>
               <Link href="/api/auth/logout">
-                <button className="bg-red-500 hover:bg-red-700 rounded-lg text-white font-bold p-2 mt-4">
+                <button
+                  className="bg-red-500 hover:bg-red-700 rounded-lg text-white font-bold p-2 mt-4"
+                  onClick={unauthorize}
+                >
                   Logout
                 </button>
               </Link>
