@@ -14,7 +14,7 @@ const authFetcher = (url: string) => fetch(url, {headers:{
 const bodyFetcher = (body: any) => (url: string) => fetch(url, body).then((res) => res.json());
 
 export const authenticateUser = async (user: string) => {
-  const data = await fetch(`${HOST}/login`,{
+  const data = await fetch(`${HOST}/api/v1/login`,{
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
