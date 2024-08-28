@@ -16,10 +16,11 @@ const PokeCardsHomePage = () => {
     if (checkWindow()) {
       setAuthorized(sessionStorage.getItem("token") ? true : false);
     }
-    if (user?.name && !authorized) {
+    if (user?.name ) {
       authenticateUser(user.name);
     }
-  }, [user, authorized]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <main className="flex flex-col items-center mx-auto max-w-[75%]">
